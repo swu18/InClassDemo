@@ -37,7 +37,7 @@
  from food in Items
  where food.MenuCategory.Description.Equals("Entree") && food.Active 
  orderby food.CurrentPrice descending
- select POCOObjectName   // New for new data set
+ select new POCOObjectName   // New for new data set
  {
   Description = food.Description,
   Price = food.CurrentPrice,
