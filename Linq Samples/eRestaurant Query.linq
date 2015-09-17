@@ -34,4 +34,6 @@ select food
  from food in Items
  where food.Calories >500 && food.MenuCategory.Description.Equals("Entree")
  select food
+ 
+ 
 
