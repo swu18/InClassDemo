@@ -30,4 +30,3 @@ from food in Items
 where food .MenuCategory.Description.Equals("Entree")
 orderby food.CurrentPrice descending, food.Calories ascending
 select food
-
