@@ -18,12 +18,28 @@ namespace eRestaurantSystem.DAL.Entities
     public class Reservation
     {
         [Key] // this is option, as you have real PK below
+        
         public int ReservationID { get; set; }
+        
+        [Required]
+        [StringLength (30,MinimumLength=5)]
         public string CustomerName{ get; set; }
-        public DateTime reservationData{ get; set; }
+        
+        public DateTime ReservationDate{ get; set; }
+
+        [Required,Range(1,16)]
+       
         public int NumberInParty{ get; set; }
+
+
+        [StringLength(15)]
         public string ContactPhone{ get; set; }
+
+        [Required]
+        [StringLength(1)]
         public string ReservationStatus{ get; set; }
+
+        [StringLength(1)]
         public string EventCode { get; set; }
 
         //Navigation properties

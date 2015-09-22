@@ -20,8 +20,13 @@ namespace eRestaurantSystem.DAL.Entities
         [Key]
 
         public int TableID { get; set; }
+
+        [Required,Range (1,25)]
+
         public byte TableNumber{get;set;}
-        public bool Smoking {get;set;}
+        public bool Smoking {get;set;} //tinyint in sql
+
+        [Required]
         public int Capacity {get;set;}
         public bool Available {get;set;}
 
@@ -38,7 +43,15 @@ namespace eRestaurantSystem.DAL.Entities
 
         public virtual ICollection<Reservation> Reservations { get; set; }
 
+        //set default value by using constr
 
+
+        public Table()
+        {
+            Available = true;
+            Smoking = false;
+        
+        }
 
     }
 }
