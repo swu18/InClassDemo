@@ -14,7 +14,7 @@ using System.ComponentModel.DataAnnotations;
 //#endregion
 namespace eRestaurantSystem.DAL.Entities
 {
-    class SpecialEvent
+    public class SpecialEvent
 
      {
         [Key]
