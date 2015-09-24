@@ -43,7 +43,7 @@ namespace eRestaurantSystem.DAL.Entities
 
         public virtual ICollection<Reservation> Reservations { get; set; }
 
-        //set default value by using constr
+        //set default value by using constructor
 
 
         public Table()
