@@ -65,7 +65,7 @@ namespace eRestaurantSystem.DAL
                      mapping.MapRightKey("TableID");
                           
                     
-                    
+                     
                     });
 
 

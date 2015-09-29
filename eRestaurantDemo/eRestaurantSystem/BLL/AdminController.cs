@@ -30,7 +30,13 @@ namespace eRestaurantSystem.BLL
                { 
                
                   // option1: method syntax
-                   return context.SpecialEvents.OrderBy(x => x.Description).ToList(); //.SpecialEvents is DbSet()
+                   //return context.SpecialEvents.OrderBy(x => x.Description).ToList(); //.SpecialEvents is DbSet()
+                
+                //option2:query syntax
+                   var results = from item in context.SpecialEvents
+                                 orderby item.Description
+                                 select item;
+                   return results.ToList();
 
               
                }
@@ -38,6 +44,25 @@ namespace eRestaurantSystem.BLL
 
         
         }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<Reservation> GetReservationByEventCode(string eventcode) //variable always lower case!!
+        {
+            using (var context = new eRestaurantContext()) //context is variable name , new is instance name
+            {
+
+               //option2:query syntax
+                var results = from item in context.Reservations
+                              where item.EventCode.Equals(eventcode)
+                              orderby item.CustomerName,item.ReservationDate
+                              select item;
+                return results.ToList();
+            }
+
+
+
+        }
+
 
     }
 }
