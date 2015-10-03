@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 using eRestaurantSystem.DAL;
 using eRestaurantSystem.DAL.Entities;
+using eRestaurantSystem.DAL.DTOs;
+using eRestaurantSystem.DAL.POCOs;
 using System.ComponentModel;// Object Data Source
+
 
 #endregion
 
@@ -59,9 +62,51 @@ namespace eRestaurantSystem.BLL
                 return results.ToList();
             }
 
-
-
         }
+            [DataObjectMethod(DataObjectMethodType.Select,false)]
+            
+                   public List<ReservationsByDate> GetReservationByDate(String reservationdate)// since reservationbydate is created by our own, has to put into name space
+                   {
+                   
+                   using (var context = new eRestaurantContext())
+
+                       {
+                        //Linq is not very playful or cooperative with 
+                       //DateTime
+                       //extract the year, moth and day ourseleves out
+                       //of the passed parameter value
+
+                       int theYear = (DateTime.Parse(reservationdate)).Year;
+                       int theMonth = (DateTime.Parse(reservationdate)).Month;
+                       int theDay = (DateTime.Parse(reservationdate)).Day;
+
+                       var results = from eventitem in context.SpecialEvents
+                                     orderby eventitem.Description
+                                     select new ReservationsByDate()//ReservationByDate is optional) a new instance for each specialevent row on the table 
+                                     {
+                                         Description = eventitem.Description,
+                                         Reservation = from row in eventitem.Reservations
+                                                       where row.ReservationDate.Year == theYear
+                                                       && row.ReservationDate.Month == theMonth
+                                                       && row.ReservationDate.Day == theDay
+                                                       select new ReservationDetail()// a new for each reservation of the particular specialevent 
+                                                       {
+                                                           CustomerName = row.CustomerName,
+                                                           ReservationDate = row.ReservationDate,
+                                                           NumberInParty = row.NumberInParty,
+                                                           ContactPhone = row.ContactPhone,
+                                                           ReservationStatus = row.ReservationStatus
+                                                       }
+
+                                     };
+                        return results.ToList();
+
+                   
+                       }
+                   
+                   
+                   }
+               
 
 
     }

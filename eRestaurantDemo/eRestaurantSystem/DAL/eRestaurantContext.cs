@@ -29,7 +29,7 @@ namespace eRestaurantSystem.DAL
                  
         }
 
-        // set up of mapping DbSet<T> property
+        //Set up of mapping DbSet<T> property
         //Map an entity to a database table 
 
         public DbSet<SpecialEvent> SpecialEvents { get; set; } // this is property name
