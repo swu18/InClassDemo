@@ -42,6 +42,7 @@ namespace eRestaurantSystem.DAL.Entities
         //sxxmondate this relationship
 
         public virtual ICollection<Reservation> Reservations { get; set; }
+        public virtual ICollection<Bill> Bills { get; set; }
 
         //set default value by using constructor
 
