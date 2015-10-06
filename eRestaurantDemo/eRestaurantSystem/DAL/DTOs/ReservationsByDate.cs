@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#region Additional Namespace
-using System Collections;
+#region 
+using System.Collections;
 #endregion
 
 namespace eRestaurantSystem.DAL.DTOs
