@@ -16,7 +16,7 @@
                          <ItemTemplate>
                              <h5>
                                  <%# Eval("Description") %>
-                                 <%--<%# ((decimal)Eval("Price")).ToString("C") %>--%>
+                                 <%# ((decimal)Eval("Price")).ToString("C") %>
                                 <span class =" badge"><%# Eval("Calories") %></span>
                                  <%#Eval("Comment") %>
                                   </h5>
