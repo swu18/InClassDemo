@@ -17,7 +17,7 @@ namespace eRestaurantSystem.DAL.Entities
 {
     public class Reservation
     {
-        [Key] // this is option, as you have real PK below
+        [Key] // this is optional, as you have real PK below
         
         public int ReservationID { get; set; }
         
@@ -50,7 +50,7 @@ namespace eRestaurantSystem.DAL.Entities
         //Reservations and Tables.
 
         //We will NOT be creating an entity for this associate table.
-        // Instead we will create on overlaoad map in out DbContext class
+        // Instead we will create on overload map in out DbContext class
         //However, we can still create the virtual navigation propery to 
         //sxxmondate this relationship 
 

@@ -31,7 +31,7 @@ namespace eRestaurantSystem.DAL.Entities
         public virtual Table Table { get; set; }
         public virtual Reservation Reservation { get; set; }
 
-        public Bill()
+        public Bill() // set default value
         {
             BillDate = DateTime.Now;
         }
