@@ -50,6 +50,51 @@ namespace eRestaurantSystem.BLL
         }
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<Waiter> Waiter_List()
+        {
+            //connect to our DbContext class in the DAL
+            //create an instance of the class
+            //constructor => connection name
+            // we will use a transaxtion to hold our query 
+            using (var context = new eRestaurantContext()) //context is variable name , new is instance name
+            {
+
+                // option1: method syntax
+                //return context.SpecialEvents.OrderBy(x => x.Description).ToList(); //.SpecialEvents is DbSet()
+
+                //option2:query syntax
+                var results = from item in context.Waiters
+                              orderby item.LastName,item.FirstName
+                              select item;
+                return results.ToList(); // none , 1 or more rows.
+
+
+            }
+
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public Waiter GetWaiterByID(int waiterid)
+        {
+           
+            using (var context = new eRestaurantContext()) //context is variable name , new is instance name
+            {
+
+                // option1: method syntax
+                //return context.SpecialEvents.OrderBy(x => x.Description).ToList(); //.SpecialEvents is DbSet()
+
+                //option2:query syntax
+                var results = from item in context.Waiters
+                              where item.WaiterID == waiterid
+                              select item;
+                return results.FirstOrDefault();// one row at most
+
+
+            }
+
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<Reservation> GetReservationByEventCode(string eventcode) //variable always lower case!!
         {
             using (var context = new eRestaurantContext()) //context is variable name , new is instance name
@@ -180,6 +225,57 @@ namespace eRestaurantSystem.BLL
                 context.SaveChanges();
             }
         }
+
+        // copy from last 
+        [DataObjectMethod(DataObjectMethodType.Insert, false)]
+        public void Waiters_Add(Waiter item)
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+
+                // these methods are execute using an instance level item
+                // set up a instance pointer and initialize to null
+                Waiter added = null;
+                // set up commanc to execute the add
+                added = context.Waiters.Add(item);
+                //command is not executed until it it actually saved.
+                context.SaveChanges();
+            }
+        }
+
+
+        [DataObjectMethod(DataObjectMethodType.Update, false)]
+        public void Waiters_Update(Waiter item)
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+
+                // indicate the updateing item instance 
+                //alter the Modified Status flag for this instance
+                context.Entry<Waiter>(context.Waiters.Attach(item)).State =
+               System.Data.Entity.EntityState.Modified;
+                //command is not executed until it it actually saved.
+                context.SaveChanges();
+            }
+        }
+
+
+        [DataObjectMethod(DataObjectMethodType.Delete, false)]
+        public void Waiters_Delete(Waiter item)
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+
+                // indicate the updateing item instance 
+                //alter the Modified Status flag for this instance
+                Waiter existing = context.Waiters.Find(item.WaiterID);
+                // set up the command to execute the delete
+                context.Waiters.Remove(existing);
+                //command is not executed until it it actually saved.
+                context.SaveChanges();
+            }
+        }
+
 
         #endregion
     }

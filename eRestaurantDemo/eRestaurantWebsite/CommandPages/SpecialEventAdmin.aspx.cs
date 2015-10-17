@@ -13,8 +13,8 @@ public partial class CommandPages_SpecialEventAdmin : System.Web.UI.Page
     }
 
 
-    protected void SpecialEventCRUD_SelectedIndexChanged(object sender, EventArgs e)
+    protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
     {
-
+        MessageUserControl.HandleDataBoundException(e);
     }
 }

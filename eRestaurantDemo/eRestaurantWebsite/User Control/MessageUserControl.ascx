@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" 
     CodeFile="MessageUserControl.ascx.cs" 
-    Inherits="User_Control_MessageUserControl" %>
+    Inherits="UserControl_MessageUserControl" %>
 
 <asp:Panel ID="MessagePanel" runat="server">
     <div class="panel-heading">
