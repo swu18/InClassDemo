@@ -100,12 +100,12 @@ public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
                     item.ReleaseDate = DateTime.Parse(ReleaseDate.Text);
                 }
                 AdminController sysmgr = new AdminController();//connect to controoler
-                WaiterID.Text = sysmgr.Waiters_Add(item).ToString();//use method
+                WaiterID.Text = sysmgr.Waiters_Add(item).ToString();//use method to get waiterID
                 MessageUserControl.ShowInfo("Waiter added.");// print message
                 WaiterList.DataBind();//drop down list to be refreshed
 
             }
-            );
+        );
     }
     protected void WaiterUpdate_Click(object sender, EventArgs e)
     {
@@ -138,8 +138,8 @@ public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
 
                     item.ReleaseDate = DateTime.Parse(ReleaseDate.Text);
                 }
-                AdminController sysmgr = new AdminController();//connect to controoler
-                sysmgr.Waiters_Update(item);//use method
+                AdminController sysmgr = new AdminController();//connect to controller
+                sysmgr.Waiters_Update(item);//use method get waiter update
                 MessageUserControl.ShowInfo("Waiter updated.");// print message
                 WaiterList.DataBind();//drop down list to be refreshed
 
