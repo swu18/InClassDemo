@@ -20,7 +20,10 @@ public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!Page.IsPostBack)
+        {
+            HireDate.Text = DateTime.Today.ToShortDateString();
+        }
     }
 
 
@@ -71,5 +74,77 @@ public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
         
         }
 
+    }
+    protected void WaiterInsert_Click(object sender, EventArgs e)
+    {
+        //inline version of using MessageUserControl
+        MessageUserControl.TryRun(() =>
+            //reminder of the code is what would have gone is 
+            // in the external method of (processRequest(MethodName))
+            {   
+                // create instance first.
+                Waiter item = new Waiter();
+                item.FirstName = FirstName.Text;
+                item.LastName = LastName.Text;
+                item.Address = Address.Text;
+                item.Phone = Phone.Text;
+                item.HireDate = DateTime.Parse(HireDate.Text);
+                //what about nullable fields
+                if (string.IsNullOrEmpty(ReleaseDate.Text))
+                {
+                    item.ReleaseDate = null;
+                }
+                else
+                {
+
+                    item.ReleaseDate = DateTime.Parse(ReleaseDate.Text);
+                }
+                AdminController sysmgr = new AdminController();//connect to controoler
+                WaiterID.Text = sysmgr.Waiters_Add(item).ToString();//use method
+                MessageUserControl.ShowInfo("Waiter added.");// print message
+                WaiterList.DataBind();//drop down list to be refreshed
+
+            }
+            );
+    }
+    protected void WaiterUpdate_Click(object sender, EventArgs e)
+    {
+        if (string.IsNullOrEmpty(WaiterID.Text))
+        { 
+         MessageUserControl .ShowInfo("please select a waiter first before update.");
+        }
+
+        else
+        {
+            MessageUserControl.TryRun(() =>
+            //reminder of the code is what would have gone is 
+            // in the external method of (processRequest(MethodName))
+            {
+                // create instance first.
+                Waiter item = new Waiter();
+                item.WaiterID = int.Parse(WaiterID.Text);
+                item.FirstName = FirstName.Text;
+                item.LastName = LastName.Text;
+                item.Address = Address.Text;
+                item.Phone = Phone.Text;
+                item.HireDate = DateTime.Parse(HireDate.Text);
+                //what about nullable fields
+                if (string.IsNullOrEmpty(ReleaseDate.Text))
+                {
+                    item.ReleaseDate = null;
+                }
+                else
+                {
+
+                    item.ReleaseDate = DateTime.Parse(ReleaseDate.Text);
+                }
+                AdminController sysmgr = new AdminController();//connect to controoler
+                sysmgr.Waiters_Update(item);//use method
+                MessageUserControl.ShowInfo("Waiter updated.");// print message
+                WaiterList.DataBind();//drop down list to be refreshed
+
+            }
+        );
+        }
     }
 }

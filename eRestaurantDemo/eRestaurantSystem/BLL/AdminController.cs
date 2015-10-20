@@ -228,7 +228,7 @@ namespace eRestaurantSystem.BLL
 
         // copy from last 
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
-        public void Waiters_Add(Waiter item)
+        public int Waiters_Add(Waiter item)
         {
             using (eRestaurantContext context = new eRestaurantContext())
             {
@@ -240,6 +240,10 @@ namespace eRestaurantSystem.BLL
                 added = context.Waiters.Add(item);
                 //command is not executed until it it actually saved.
                 context.SaveChanges();
+               // the Waiter instance added contains the newly inserted
+               // record to sql including the generated play value
+                return added.WaiterID;
+            
             }
         }
 
