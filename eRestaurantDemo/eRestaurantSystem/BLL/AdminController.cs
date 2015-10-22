@@ -176,7 +176,7 @@ namespace eRestaurantSystem.BLL
 
         #endregion
 
-        #region Add, Update,Delete of CRUD for CQRS(Comment query responsibility )
+        #region Add, Update,Delete of CRUD for CQRS(Command Query Responsibility Segregation )
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
         public void SpecialEvent_Add(SpecialEvent item)
         {
