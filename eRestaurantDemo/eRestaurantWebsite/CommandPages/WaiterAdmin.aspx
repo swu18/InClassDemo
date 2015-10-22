@@ -11,11 +11,11 @@
     <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
     <asp:Label ID="Label1" runat="server" Text="WaiterName"></asp:Label>
     <asp:DropDownList ID="WaiterList" runat="server" DataSourceID="ODSWaiterList" DataTextField="FullName" DataValueField="WaiterID">
-        <asp:ListItem Value ="0"> Selected a Waiter</asp:ListItem>
+     
 
     </asp:DropDownList>
     
-     <asp:LinkButton ID="FetchWaiter" runat="server" OnClick="FetchWaiter_Click">LinkButton</asp:LinkButton>
+     <asp:LinkButton ID="FetchWaiter" runat="server" OnClick="FetchWaiter_Click">FetchData</asp:LinkButton>
     <asp:ObjectDataSource ID="ODSWaiterList" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="Waiter_List" TypeName="eRestaurantSystem.BLL.AdminController"></asp:ObjectDataSource>
 
     <table align="center" style="width: 73%">

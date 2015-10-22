@@ -23,9 +23,21 @@ public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             HireDate.Text = DateTime.Today.ToShortDateString();
+            RefreshWaiterList("0");//set drop down list to the prompt(2015.10.21)
         }
     }
 
+    protected void RefreshWaiterList(String selectedvalue) //2015.10.21
+
+    { 
+    
+    //force the re-execution of the query for the drop down list
+        WaiterList.DataBind(); //databind and evalbind()?
+        // insert the prompt line into the drop down list data
+        WaiterList.Items.Insert(0, "Select a waiter");
+        // position the waiterlist to the desired row representing the waiter
+        WaiterList.SelectedValue = selectedvalue;
+    }
 
     protected void CheckException(object sender, ObjectDataSourceStatusEventArgs e)
     {
@@ -102,8 +114,8 @@ public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
                 AdminController sysmgr = new AdminController();//connect to controoler
                 WaiterID.Text = sysmgr.Waiters_Add(item).ToString();//use method to get waiterID
                 MessageUserControl.ShowInfo("Waiter added.");// print message
-                WaiterList.DataBind();//drop down list to be refreshed
-
+                //WaiterList.DataBind();//drop down list to be refreshed
+                RefreshWaiterList(WaiterID.Text);//201510.21
             }
         );
     }
@@ -141,7 +153,8 @@ public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
                 AdminController sysmgr = new AdminController();//connect to controller
                 sysmgr.Waiters_Update(item);//use method get waiter update
                 MessageUserControl.ShowInfo("Waiter updated.");// print message
-                WaiterList.DataBind();//drop down list to be refreshed
+                //WaiterList.DataBind();//drop down list to be refreshed
+                RefreshWaiterList(WaiterID.Text);//201510.21
 
             }
         );
