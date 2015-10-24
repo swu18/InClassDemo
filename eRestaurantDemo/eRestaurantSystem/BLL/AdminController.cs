@@ -176,6 +176,38 @@ namespace eRestaurantSystem.BLL
 
         #endregion
 
+        [DataObjectMethod(DataObjectMethodType.Select,false)]// for ODS
+        public List<WaiterBilling>GetWaiterBillReport()
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+
+                var results = from abillrow in context.Bills//context? 1. put context
+                              where abillrow.BillDate.Month == 5
+                              orderby abillrow.BillDate,
+                                      abillrow.Waiter.LastName,
+                                      abillrow.Waiter.FirstName
+                              select new WaiterBilling() //3.put class name
+                              {
+                                  BillDate =  abillrow.BillDate.Year +"/"+
+                                                 abillrow.BillDate.Month +"/"+
+                                                 abillrow.BillDate.Day,
+                                  WaiterName = abillrow.Waiter.LastName + ", " +
+                                               abillrow.Waiter.FirstName,
+                                  BillID = abillrow.BillID,
+                                  BillTotal = abillrow.Items.Sum(eachbillitemrow =>  //billitem=>item?
+                                            eachbillitemrow.Quantity * eachbillitemrow.SalePrice),
+                                  PartySize = abillrow.NumberInParty,
+                                  Contact = abillrow.Reservation.CustomerName
+                              }; //2. put ;
+
+             return results.ToList();
+            
+            }
+        
+        
+        }
+
         #region Add, Update,Delete of CRUD for CQRS(Command Query Responsibility Segregation )
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
         public void SpecialEvent_Add(SpecialEvent item)
