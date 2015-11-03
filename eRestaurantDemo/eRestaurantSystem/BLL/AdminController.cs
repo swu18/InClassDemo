@@ -348,6 +348,39 @@ namespace eRestaurantSystem.BLL
             }
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public List<ReservationCollection> ReservationsByTime(DateTime date)
+        {
+            using (var context = new eRestaurantContext())
+            {
+                var result = (from data in context.Reservations
+                              where data.ReservationDate.Year == date.Year
+                              && data.ReservationDate.Month == date.Month
+                              && data.ReservationDate.Day == date.Day
+                                  // && data.ReservationDate.Hour == timeSlot.Hours
+                              && data.ReservationStatus == Reservation.Booked //"B"
+                              select new ReservationSummary()
+                              {
+                                  ID = data.ReservationID,
+                                  Name = data.CustomerName,
+                                  Date = data.ReservationDate,
+                                  NumberInParty = data.NumberInParty,
+                                  Status = data.ReservationStatus,
+                                  Event = data.Event.Description,
+                                  Contact = data.ContactPhone
+                              }).ToList();//causes executin of the query so 
+                                          // that the retrieved data is in memory
+                var finalResult = from item in result
+                                  orderby item.NumberInParty
+                                  group item by item.Date.Hour into itemGroup//temportary data collection
+                                  select new ReservationCollection()//DTO
+                                  {
+                                      Hour = itemGroup.Key,
+                                      Reservations = itemGroup.ToList()
+                                  };
+                return finalResult.OrderBy(x => x.Hour).ToList();//method syntax
+            }
+        }
         #endregion
 
     }//eof class

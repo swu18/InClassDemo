@@ -75,27 +75,11 @@
                     StaticMenuItemStyle-HorizontalPadding="10px"
                     RenderingMode="List" Orientation="Horizontal" 
                     DynamicMenuItemStyle-ForeColor="#999999" 
-                    DynamicMenuStyle-BackColor="Black>
+                    DynamicMenuStyle-BackColor="Black">
                         <Items>
                         <asp:MenuItem Text="Home" NavigateUrl="~/"></asp:MenuItem>
 
                         <asp:MenuItem Text="Admin" Value="DDMenu">
-                            <asp:MenuItem Text="About Us" NavigateUrl="~/About.aspx"></asp:MenuItem>
-                            <asp:MenuItem Text="Contact Us" NavigateUrl="~/Contact.aspx"></asp:MenuItem>
-
-                        </asp:MenuItem>
-                        <asp:MenuItem Text="Admin" Value="DDMenu">
-
-                            <li><a runat="server" href="~/SamplePages/SpecialEventsAdmin">SpecialEventsAdmin</a></li>
-                         <li><a runat="server" href="~/SamplePages/ListView">ListView</a></li>
-                         <li><a runat="server" href="~/SamplePages/ReservationByDate">RPT display</a></li>
-                        <li><a runat="server" href="~/SamplePages/CategoryMenuitems">RPT2 display</a></li>
-                        <li><a runat="server" href="~/CommandPages/SpecialEventAdmin">LV.CRUD</a></li>
-                        <li><a runat="server" href="~/CommandPages/WaiterAdmin">Single Row</a></li>
-                        <li><a runat="server" href="~/Reports/CategoryMenuItemsReport">Report</a></li>
-                         <li><a runat="server" href="~/Reports/WaiterBillingReport">WaiterBillingReport</a></li>
-                         <li><a runat="server" href="~/UXPages/FrontDesk">FrontDesk</a></li>
-
                             <asp:MenuItem Text="About Us" NavigateUrl="~/About.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="Contact Us" NavigateUrl="~/Contact.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="SpecialEventsAdmin" NavigateUrl="~/SamplePages/SpecialEventsAdmin"></asp:MenuItem>
@@ -109,8 +93,9 @@
 
                         </asp:MenuItem>
                     </Items>
-                         
+                      
                     </asp:Menu>
+
                 </div>
             </div>
         </div>
