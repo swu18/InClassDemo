@@ -1,10 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="FrontDesk.aspx.cs" Inherits="UXPages_FrontDesk" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
-    <br />
-    <br /><br /><br /><br /><br />
-    <br />
-    <br />
+    
     <br />
     <div class="well">
         <div class="pull-right col-md-5">

@@ -1,7 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="SpecialEventsAdmin.aspx.cs" Inherits="NewFolder1_SpecialEventsAdmin" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
-
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     <table class="nav-justified">
         <tr>
             <td>
