@@ -87,7 +87,7 @@
                             <asp:MenuItem Text="RPT2 display" NavigateUrl="~/SamplePages/CategoryMenuitems"></asp:MenuItem>
                             <asp:MenuItem Text="LV.CRUD" NavigateUrl="~/CommandPages/SpecialEventAdmin"></asp:MenuItem>
                             <asp:MenuItem Text="Single Row" NavigateUrl="~/CommandPages/WaiterAdmin"></asp:MenuItem>
-                            <asp:MenuItem Text="Report" NavigateUrl="~/Reports/CategoryMenuItemsReport"></asp:MenuItem>
+                            <asp:MenuItem Text="CategoryMenuItemsRepor" NavigateUrl="~/Reports/CategoryMenuItemsReport"></asp:MenuItem>
                              <asp:MenuItem Text="WaiterBillingReport" NavigateUrl="~/Reports/WaiterBillingReport"></asp:MenuItem>
                              <asp:MenuItem Text="FrontDesk" NavigateUrl="~/UXPages/FrontDesk"></asp:MenuItem>
 
