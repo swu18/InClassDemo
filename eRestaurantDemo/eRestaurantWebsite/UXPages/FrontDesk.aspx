@@ -1,21 +1,28 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="FrontDesk.aspx.cs" Inherits="UXPages_FrontDesk" %>
 
+<%@ Register Src="~/User Control/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
-    
-    <br />
-    <div class="well">
+     <div class="well">
         <div class="pull-right col-md-5">
             <h4>
                 <small>Last Billed Date/Time:</small>
-                <asp:Repeater ID="AdHocBillDateRepeater" runat="server" DataSourceID="AdHocBillDateDataSource" ItemType="System.DateTime">
+                <asp:Repeater ID="AdHocBillDateRepeater" runat="server" 
+                    DataSourceID="AdHocBillDateDataSource" 
+                    ItemType="System.DateTime">
                     <itemtemplate><b class="label label-primary"><%# Item.ToShortDateString() %></b> &ndash; <b class="label label-info"><%# Item.ToShortTimeString() %></b></itemtemplate>
                 </asp:Repeater>
             </h4>
-            <asp:ObjectDataSource runat="server" ID="AdHocBillDateDataSource" OldValuesParameterFormatString="original_{0}" SelectMethod="GetLastBillDateTime" TypeName="eRestaurantSystem.BLL.AdminController"></asp:ObjectDataSource>
+            <asp:ObjectDataSource runat="server" ID="AdHocBillDateDataSource"
+                 OldValuesParameterFormatString="original_{0}" 
+                SelectMethod="GetLastBillDateTime" 
+                TypeName="eRestaurantSystem.BLL.AdminController"></asp:ObjectDataSource>
         </div>
         <h4>Mock Date/Time</h4>
         <asp:LinkButton ID="MockDateTime" runat="server" CssClass="btn btn-primary">Post-back new date/time:</asp:LinkButton>
-        <asp:LinkButton ID="MockLastBillingDateTime" runat="server" CssClass="btn btn-default" OnClick="MockLastBillingDateTime_Click">Set to Last-Billed date/time:</asp:LinkButton>
+        <asp:LinkButton ID="MockLastBillingDateTime" runat="server" CssClass="btn btn-default" 
+            OnClick="MockLastBillingDateTime_Click">Set to Last-Billed date/time:</asp:LinkButton>
         &nbsp;
         <asp:TextBox id="SearchDate" runat="server" TextMode="Date" Text="2014-10-16"></asp:TextBox>
         <asp:TextBox id="SearchTime" runat="server" TextMode="Time" Text="13:00" CssClass="clockpicker"></asp:TextBox>
@@ -34,14 +41,18 @@
         </details>
     </div>
 
-    <!--this source is to display the Seating Summary20151109-->
-
-     <div class="col-md-7">
+    <!-- this is the presentation markup code for the
+        seating summary display-->
+    <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
+    <div class="col-md-7">
         <details open>
             <summary>Tables</summary>
-           <p class="well">This GridView uses a &lt;asp:TemplateField …&lt; for the table 
-               number and the controls to handle walk-in seating. Additionally, the walk-in
-               seating form is in a panel that only shows if the seat is <em>not</em> taken. Handling of the action to <b>seat customers</b> is done in the code-behind, on the GridView's <code>OnSelectedIndexChanging</code> event.</p>
+            <p class="well">This GridView uses a &lt;asp:TemplateField …&gt; for the 
+                table number and the controls to handle walk-in seating. 
+                Additionally, the walk-in seating form is in a panel that 
+                only shows if the seat is <em>not</em> taken. Handling of 
+                the action to <b>seat customers</b> is done in the code-behind, 
+                on the GridView's <code>OnSelectedIndexChanging</code> event.</p>
             <style type="text/css">
                 .inline-div {
                     display: inline;
@@ -50,21 +61,29 @@
             <asp:GridView ID="SeatingGridView" runat="server" AutoGenerateColumns="False"
                     CssClass="table table-hover table-striped table-condensed"
                     DataSourceID="SeatingObjectDataSource" 
-                 ItemType="eRestaurantSystem.DAL.POCOs.WaiterOnDuty">
+                    ItemType="eRestaurantSystem.DAL.POCOs.SeatingSummary">
                 <Columns>
-                    <asp:CheckBoxField DataField="Taken" HeaderText="Taken" SortExpression="Taken" ItemStyle-HorizontalAlign="Center"></asp:CheckBoxField>
-                    <asp:TemplateField HeaderText="Table" SortExpression="Table" ItemStyle-HorizontalAlign="Center">
+                    <asp:CheckBoxField DataField="Taken" HeaderText="Taken" 
+                        SortExpression="Taken" ItemStyle-HorizontalAlign="Center">
+                    </asp:CheckBoxField>
+                    <asp:TemplateField HeaderText="Table" SortExpression="Table" 
+                        ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:Label ID="TableNumber" runat="server" Text='<%# Item.Table %>'></asp:Label>
+                            <asp:Label ID="TableNumber" runat="server" 
+                                Text='<%# Item.Table %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:BoundField DataField="Seating" HeaderText="Seating" SortExpression="Seating" ItemStyle-HorizontalAlign="Center"></asp:BoundField>
+                    <asp:BoundField DataField="Seating" HeaderText="Seating" 
+                        SortExpression="Seating" ItemStyle-HorizontalAlign="Center"></asp:BoundField>
                     <asp:TemplateField HeaderText="Reservation Notes / Seat Walk-In">
                         <ItemTemplate>
-                            <asp:Panel ID="WalkInSeatingPanel" runat="server" CssClass="input-group input-group-sm"
+                            <asp:Panel ID="WalkInSeatingPanel" runat="server" 
+                                CssClass="input-group input-group-sm"
                                     Visible='<%# !Item.Taken %>'>
-                                <asp:TextBox ID="NumberInParty" runat="server" CssClass="form-control col-md-1"
-                                        TextMode="Number" placeholder="# people"></asp:TextBox>
+                                <asp:TextBox ID="NumberInParty" runat="server" 
+                                    CssClass="form-control col-md-1"
+                                        TextMode="Number" placeholder="# people">
+                                </asp:TextBox>
                                 <span class="input-group-addon">
                                     <asp:DropDownList ID="WaiterList" runat="server"
                                             CssClass="selectpicker"
@@ -73,9 +92,11 @@
                                         <asp:ListItem Value="0">[select a waiter]</asp:ListItem>
                                     </asp:DropDownList>
                                 </span>
-                                <span class="input-group-addon" style="width:5px;padding:0;border:0;background-color:white;"></span>
+                                <span class="input-group-addon" style="width:5px;padding:0;
+                                    border:0;background-color:white;"></span>
                                 <asp:LinkButton ID="LinkButton1" runat="server" Text="Seat Customers"
-                                    CssClass="input-group-btn" CommandName="Select" CausesValidation="False" />
+                                    CssClass="input-group-btn" CommandName="Select" 
+                                    CausesValidation="False" />
                             </asp:Panel>
                             <asp:Panel ID="OccupiedTablePanel" runat="server"
                                     Visible='<%# Item.Taken  %>'>
@@ -85,7 +106,8 @@
                                         Visible='<%# !string.IsNullOrEmpty(Item.ReservationName) %>' />
                                 <asp:Panel ID="BillInfo" runat="server" CssClass="inline-div"
                                         Visible='<%# Item.BillTotal.HasValue && Item.BillTotal.Value > 0 %>'>
-                                    <asp:Label ID="Label1" runat="server" Text='<%# string.Format(" &ndash; {0:C}", Item.BillTotal) %>' />
+                                    <asp:Label ID="Label1" runat="server" Text='<%# 
+                                    string.Format(" &ndash; {0:C}", Item.BillTotal) %>' />
                                 </asp:Panel>
                             </asp:Panel>
                         </ItemTemplate>
@@ -95,28 +117,33 @@
         </details>
     </div>
     <asp:ObjectDataSource runat="server" ID="SeatingObjectDataSource" OldValuesParameterFormatString="original_{0}"
-        SelectMethod="SeatingByDateTime" TypeName="eRestaurantSystem.BLL.AdminController">
+        SelectMethod="SeatingByDateTime" 
+        TypeName="eRestaurantSystem.BLL.AdminController">
         <SelectParameters>
             <asp:ControlParameter ControlID="SearchDate" PropertyName="Text" Name="date" Type="DateTime"></asp:ControlParameter>
             <asp:ControlParameter ControlID="SearchTime" PropertyName="Text" DbType="Time" Name="newtime"></asp:ControlParameter>
         </SelectParameters>
     </asp:ObjectDataSource>
+    <asp:ObjectDataSource runat="server" ID="WaitersDataSource" OldValuesParameterFormatString="original_{0}"
+    SelectMethod="ListWaiters" 
+        TypeName="eRestaurantSystem.BLL.AdminController"></asp:ObjectDataSource>
 
-    <asp:ObjectDataSource ID="WaiterDataSource" runat="server"></asp:ObjectDataSource>
-
-
-
-    <!-- this sourse is to display the Reservations for the select day 
-        in a collaspable display controlled by bootstrap-->>
+    <!--this is the presentation markup code for the 
+        reservation display -->
     <div class="pull-right col-md-5">
-        <details open><!--collapisable area controlled by bootstrap -->
+        <!-- details is a bootstrap collapsable area-->
+        <details open>
+            <!-- the text displayed beside the details icon -->
             <summary>Reservations by Date/Time</summary>
             <h4>Today's Reservations</h4>
+            <!-- ItemType= parameters must be directed to your
+                current application locations -->
             <asp:Repeater ID="ReservationsRepeater" runat="server"
-                ItemType="eRestaurantSystem.DAL.DTOs.ReservationCollection" DataSourceID="ReservationsDataSource">
+                ItemType="eRestaurantSystem.DAL.DTOs.ReservationCollection" 
+                DataSourceID="ReservationsDataSource">
                 <ItemTemplate>
                     <div>
-                        <h4><%# Item.SeatingTime %></h4><!--read only value--><!--referring to the DTOs Icollection-->
+                        <h4><%# Item.SeatingTime %></h4>
                         <asp:ListView ID="ReservationSummaryListView" runat="server"
                                 ItemType="eRestaurantSystem.DAL.POCOs.ReservationSummary"
                                 DataSource="<%# Item.Reservations %>">
@@ -138,16 +165,18 @@
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
+            <!-- TypeName= parameters must be directed to your
+                current application locations -->
             <asp:ObjectDataSource runat="server" ID="ReservationsDataSource" 
-                OldValuesParameterFormatString="original_{0}" SelectMethod="ReservationsByTime" 
+                OldValuesParameterFormatString="original_{0}" 
+                SelectMethod="ReservationsByTime" 
                 TypeName="eRestaurantSystem.BLL.AdminController">
                 <SelectParameters>
-                    <asp:ControlParameter ControlID="SearchDate" PropertyName="Text" Name="date" Type="DateTime"></asp:ControlParameter>
+                    <asp:ControlParameter ControlID="SearchDate" 
+                        PropertyName="Text" Name="date" 
+                        Type="DateTime"></asp:ControlParameter>
                 </SelectParameters>
             </asp:ObjectDataSource>
         </details>
     </div>
-
-
 </asp:Content>
-

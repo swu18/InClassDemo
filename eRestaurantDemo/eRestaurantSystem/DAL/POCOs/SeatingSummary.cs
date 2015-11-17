@@ -11,8 +11,8 @@ namespace eRestaurantSystem.DAL.POCOs
         public byte Table { get;set;}//0-255 in sql tiny, tiny in sql is byte
         public int Seating { get; set; }
         public bool Taken { get; set; }
-        public int BillID { get; set; }
-        public decimal BillTotal { get; set; }
+        public int? BillID { get; set; }
+        public decimal? BillTotal { get; set; }
         public string Waiter { get; set; }
         public string ReservationName { get; set; }
 

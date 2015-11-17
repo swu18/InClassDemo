@@ -175,7 +175,7 @@ namespace eRestaurantSystem.BLL
             }
         }
 
-        #endregion
+       
 
         [DataObjectMethod(DataObjectMethodType.Select,false)]// for ODS
         public List<WaiterBilling>GetWaiterBillReport()
@@ -208,6 +208,8 @@ namespace eRestaurantSystem.BLL
         
         
         }
+
+        #endregion
 
         #region Add, Update,Delete of CRUD for CQRS(Command Query Responsibility Segregation )
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
@@ -349,6 +351,54 @@ namespace eRestaurantSystem.BLL
             }
         }
         [DataObjectMethod(DataObjectMethodType.Select)]
+        public List<ReservationCollection> ReservationsByTime(DateTime date)
+        {
+            using (var context = new eRestaurantContext())
+            {
+                var result = (from data in context.Reservations
+                              where data.ReservationDate.Year == date.Year
+                              && data.ReservationDate.Month == date.Month
+                              && data.ReservationDate.Day == date.Day
+                                  // && data.ReservationDate.Hour == timeSlot.Hours
+                              && data.ReservationStatus == Reservation.Booked
+                              select new ReservationSummary()
+                              {
+                                  ID = data.ReservationID,
+                                  Name = data.CustomerName,
+                                  Date = data.ReservationDate,
+                                  NumberInParty = data.NumberInParty,
+                                  Status = data.ReservationStatus,
+                                  Event = data.Event.Description,
+                                  Contact = data.ContactPhone
+                              }).ToList();
+                //the second part of this method uses the results of the
+                //first linq query.
+                //Linq to Entity will only execute the query when it deems
+                //necessary for having the results in memory.
+                //
+                //to get your query to execute and have the resulting data
+                //inside memory for further use, you can attach the .ToList()
+                //to the previous query
+
+                //note: the second query is NOT using an Entity
+                //it is using the results from a previous query
+
+                //itemGroup is a temporary in memory data collection
+                //this collection can be used in selecting your final
+                //data collection.
+                var finalResult = from item in result
+                                  orderby item.NumberInParty
+                                  group item by item.Date.Hour into itemGroup
+                                  select new ReservationCollection()
+                                  {
+                                      Hour = itemGroup.Key,
+                                      Reservations = itemGroup.ToList()
+                                  };
+                return finalResult.OrderBy(x => x.Hour).ToList();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<SeatingSummary> SeatingByDateTime(DateTime date, TimeSpan newtime)
         {
             using (eRestaurantContext context = new eRestaurantContext())
@@ -428,9 +478,10 @@ namespace eRestaurantSystem.BLL
 
 
 
+                //step3.Dump();
                 // Step 4 - Build our intended seating summary info
                 var step4 = from data in step3
-                            select new SeatingSummary() // the DTO class to use in my BLL
+                            select new SeatingSummary() // the POCO class to use in my BLL
                             {
                                 Table = data.Table,
                                 Seating = data.Seating,
@@ -467,7 +518,78 @@ namespace eRestaurantSystem.BLL
             }
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select,false)]//20151116 for linkbutton
+        public List<SeatingSummary> AvailableSeatingByDateTime(DateTime date,TimeSpan time)
 
+        {
+            var results = from seats in SeatingByDateTime(date, time)
+                          where !seats.Taken
+                          select seats;
+          return results.ToList();
+                         
+        }
+
+        public void SeatCustomer(DateTime when, byte tablenumber,
+                                 int numberinparty, int waiterid)
+        { 
+        
+        //business logic checking should be done
+        //BEFORE attempting to place data on the database
+        //rule1: is the seat available
+        //rule2: is the selected table capicity sufficicent
+        // get the available seats 
+
+            var availableseatrs = AvailableSeatingByDateTime(when.Date,
+                                                             when.TimeOfDay);
+         // start my transaction
+            using (eRestaurantContext context = new eRestaurantContext())
+
+            {
+            
+              //create a holding list for possible  business logic
+              //this is need for the MessageUserControl
+                List<string> errors = new List<string>();
+
+                if (!availableseatrs.Exists(foreachseat => foreachseat.Table == tablenumber))
+                { 
+                
+                  // the table numberis not available 
+                    errors.Add("Table is currently not availabe");
+
+                
+                }
+                else if (!availableseatrs.Exists(foreachseat =>foreachseat.Table == tablenumber
+                         && foreachseat.Seating>=numberinparty))
+                {
+                
+                //the table is available but not large enough
+                    errors.Add("Insufficient seating capacity for number of customers");
+                                    
+                }
+                //check if any errors to business rules exist
+                if (errors.Count > 0)
+                {
+                    //throw an exception which will terminate the transaction
+                    //BusinessRuleException is part of the MessageUserControl setup
+                    throw new BusinessRuleException("unable to seat customer", errors);
+                    //assume your data is valid
+                    //create an instance of the Bill entity and fill with data
+                    Bill seatedcustomer = new Bill();
+                    seatedcustomer.BillDate = when;
+                    seatedcustomer.NumberInParty = numberinparty;
+                    seatedcustomer.WaiterID = waiterid;
+                    seatedcustomer.TableID = tablenumber;
+
+                    //issue the command to add a record to the bill entity
+                    context.Bills.Add(seatedcustomer);
+                    //save sand commin the changes to the entity
+                    context.SaveChanges();
+                }
+            
+            }
+
+       
+        }
         #endregion
 
     }//eof class

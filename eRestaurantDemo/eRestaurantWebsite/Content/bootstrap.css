@@ -860,6 +860,10 @@ pre code {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+    top: -253px;
+    left: 0px;
+    height: 349px;
+    width: 684px;
 }
 
 .col-xs-1,
@@ -1414,7 +1418,6 @@ th {
 }
 
 .table {
-  width: 100%;
   margin-bottom: 20px;
 }
 
