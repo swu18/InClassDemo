@@ -5,16 +5,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-
 #region Additional Namespaces
-using eRestaurantSystem.BLL;//Control
-using eRestaurantSystem.DAL.Entities;//Entity
-using EatIn.UI; // delegate processrequest
-
-
+using eRestaurantSystem.BLL;   //controller
+using eRestaurantSystem.DAL.Entities;  //entity
+using EatIn.UI;  //delegate ProcessRequest
 #endregion
-
-
 
 public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
 {
@@ -22,49 +17,47 @@ public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
     {
         if (!Page.IsPostBack)
         {
+            RefreshWaiterList("0");
             HireDate.Text = DateTime.Today.ToShortDateString();
-            RefreshWaiterList("0");//set drop down list to the prompt(2015.10.21)
         }
     }
 
-    protected void RefreshWaiterList(String selectedvalue) //2015.10.21
-
-    { 
-    
-    //force the re-execution of the query for the drop down list
-        WaiterList.DataBind(); //databind and evalbind()?
-        // insert the prompt line into the drop down list data
+    protected void RefreshWaiterList(string selectedvalue)
+    {
+        //force a requery of the drop down list
+        WaiterList.DataBind();
+        //insert of the prompt line
         WaiterList.Items.Insert(0, "Select a waiter");
-        // position the waiterlist to the desired row representing the waiter
+        //position on a waiter in the list
         WaiterList.SelectedValue = selectedvalue;
     }
 
-    protected void CheckException(object sender, ObjectDataSourceStatusEventArgs e)
+    protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
     {
-
         MessageUserControl.HandleDataBoundException(e);
     }
+
     protected void FetchWaiter_Click(object sender, EventArgs e)
     {
-        //to properly interfact with our MessageUserControl
-        //We will delegte the execution of this Click Event
-        //under the MessageUserControl.
-        if(WaiterList.SelectedIndex == 0)
+        //to properly interface with our MessageUserControl
+        //we will delegate the execution of this Click event
+        //under the MessageUserControl
+        if (WaiterList.SelectedIndex == 0)
         {
-          //issue our own error message
-            MessageUserControl.ShowInfo("please select a waiter to process.");
+            //issue our own error message
+            MessageUserControl.ShowInfo("Please select a waiter to process.");
         }
         else
         {
-          //execute the necessary standard lookup code under the 
-          //control of the MessageUserControl
-        MessageUserControl.TryRun((ProcessRequest)GetWaiterInfo);
+            //execute the necessary standard lookup code under the
+            //control of the MessageUserControl
+            MessageUserControl.TryRun((ProcessRequest)GetWaiterInfo);
         }
     }
 
     public void GetWaiterInfo()
     {
-    // a standard look up process
+        //a standard lookup process
         AdminController sysmgr = new AdminController();
         var waiter = sysmgr.GetWaiterByID(int.Parse(WaiterList.SelectedValue));
         WaiterID.Text = waiter.WaiterID.ToString();
@@ -73,66 +66,46 @@ public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
         Address.Text = waiter.Address;
         Phone.Text = waiter.Phone;
         HireDate.Text = waiter.HireDate.ToShortDateString();
-
         //null field check
-        if(waiter.ReleaseDate.HasValue)
+        if (waiter.ReleaseDate.HasValue)
         {
-         ReleaseDate.Text = waiter.ReleaseDate.ToString();
-        
+            ReleaseDate.Text = waiter.ReleaseDate.ToString();
         }
         else
         {
-        ReleaseDate.Text = "";
-        
+            ReleaseDate.Text = "";
         }
-
     }
     protected void WaiterInsert_Click(object sender, EventArgs e)
     {
-        //inline version of using MessageUserControl
+        //this example is using the TryRun inline
         MessageUserControl.TryRun(() =>
-            //reminder of the code is what would have gone is 
-            // in the external method of (processRequest(MethodName))
-            {   
-                // create instance first.
+            {
                 Waiter item = new Waiter();
                 item.FirstName = FirstName.Text;
                 item.LastName = LastName.Text;
                 item.Address = Address.Text;
                 item.Phone = Phone.Text;
                 item.HireDate = DateTime.Parse(HireDate.Text);
-                //what about nullable fields
-                if (string.IsNullOrEmpty(ReleaseDate.Text))
-                {
-                    item.ReleaseDate = null;
-                }
-                else
-                {
-
-                    item.ReleaseDate = DateTime.Parse(ReleaseDate.Text);
-                }
-                AdminController sysmgr = new AdminController();//connect to controoler
-                WaiterID.Text = sysmgr.Waiters_Add(item).ToString();//use method to get waiterID
-                MessageUserControl.ShowInfo("Waiter added.");// print message
-                //WaiterList.DataBind();//drop down list to be refreshed
-                RefreshWaiterList(WaiterID.Text);//201510.21
+                item.ReleaseDate = null;
+                AdminController sysmgr = new AdminController();
+                WaiterID.Text = sysmgr.Waiters_Add(item).ToString();
+                MessageUserControl.ShowInfo("Waiter added.");
+                RefreshWaiterList(WaiterID.Text);
             }
         );
     }
     protected void WaiterUpdate_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrEmpty(WaiterID.Text))
-        { 
-         MessageUserControl .ShowInfo("please select a waiter first before update.");
-        }
+        {
+            MessageUserControl.ShowInfo("Please select a waiter to update.");
 
+        }
         else
         {
             MessageUserControl.TryRun(() =>
-            //reminder of the code is what would have gone is 
-            // in the external method of (processRequest(MethodName))
             {
-                // create instance first.
                 Waiter item = new Waiter();
                 item.WaiterID = int.Parse(WaiterID.Text);
                 item.FirstName = FirstName.Text;
@@ -140,24 +113,21 @@ public partial class CommandPages_WaiterAdmin : System.Web.UI.Page
                 item.Address = Address.Text;
                 item.Phone = Phone.Text;
                 item.HireDate = DateTime.Parse(HireDate.Text);
-                //what about nullable fields
                 if (string.IsNullOrEmpty(ReleaseDate.Text))
                 {
                     item.ReleaseDate = null;
                 }
                 else
                 {
-
                     item.ReleaseDate = DateTime.Parse(ReleaseDate.Text);
                 }
-                AdminController sysmgr = new AdminController();//connect to controller
-                sysmgr.Waiters_Update(item);//use method get waiter update
-                MessageUserControl.ShowInfo("Waiter updated.");// print message
-                //WaiterList.DataBind();//drop down list to be refreshed
-                RefreshWaiterList(WaiterID.Text);//201510.21
-
+                
+                AdminController sysmgr = new AdminController();
+                sysmgr.Waiters_Update(item);
+                MessageUserControl.ShowInfo("Waiter updated.");
+                RefreshWaiterList(WaiterID.Text);
             }
-        );
+            );
         }
     }
 }

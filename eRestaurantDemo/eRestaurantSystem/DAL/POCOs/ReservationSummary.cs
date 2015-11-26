@@ -15,6 +15,5 @@ namespace eRestaurantSystem.DAL.POCOs
         public string Status { get; set; }
         public string Event { get; set; }
         public string Contact { get; set; }
-
     }
 }

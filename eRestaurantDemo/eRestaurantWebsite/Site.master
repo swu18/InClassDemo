@@ -46,12 +46,10 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">Shuang Wu</a>
+                    <a class="navbar-brand" runat="server" href="~/">Don Welch</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                    </ul>
+ 
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
@@ -68,7 +66,9 @@
                             </ul>
                         </LoggedInTemplate>
                     </asp:LoginView>
-                    <asp:Menu ID="navMenu" runat="server"
+
+                     <asp:Menu ID="navMenu" runat="server" 
+
                     BackColor="#000000" BorderColor="Red"
                     StaticMenuItemStyle-ForeColor="#999999" 
                     StaticMenuItemStyle-VerticalPadding="10px"
@@ -76,25 +76,34 @@
                     RenderingMode="List" Orientation="Horizontal" 
                     DynamicMenuItemStyle-ForeColor="#999999" 
                     DynamicMenuStyle-BackColor="Black">
-                        <Items>
+                    <Items>
                         <asp:MenuItem Text="Home" NavigateUrl="~/"></asp:MenuItem>
 
-                        <asp:MenuItem Text="Admin" Value="DDMenu">
-                            <asp:MenuItem Text="About Us" NavigateUrl="~/About.aspx"></asp:MenuItem>
-                            <asp:MenuItem Text="Contact Us" NavigateUrl="~/Contact.aspx"></asp:MenuItem>
-                            <asp:MenuItem Text="SpecialEventsAdmin" NavigateUrl="~/SamplePages/SpecialEventsAdmin"></asp:MenuItem>
-                            <asp:MenuItem Text="ListView" NavigateUrl="~/SamplePages/ListView"></asp:MenuItem>
-                            <asp:MenuItem Text="RPT2 display" NavigateUrl="~/SamplePages/CategoryMenuitems"></asp:MenuItem>
-                            <asp:MenuItem Text="LV.CRUD" NavigateUrl="~/CommandPages/SpecialEventAdmin"></asp:MenuItem>
-                            <asp:MenuItem Text="Single Row" NavigateUrl="~/CommandPages/WaiterAdmin"></asp:MenuItem>
-                            <asp:MenuItem Text="CategoryMenuItemsRepor" NavigateUrl="~/Reports/CategoryMenuItemsReport"></asp:MenuItem>
-                             <asp:MenuItem Text="WaiterBillingReport" NavigateUrl="~/Reports/WaiterBillingReport"></asp:MenuItem>
-                             <asp:MenuItem Text="FrontDesk" NavigateUrl="~/UXPages/FrontDesk"></asp:MenuItem>
-
+                        <asp:MenuItem Text="Queries" Value="Queries">
+                            <asp:MenuItem Text="SpecialEvents" NavigateUrl="~/SamplePages/SpecialEventsAdmin"></asp:MenuItem>
+                            <asp:MenuItem Text="ListView Reservations" NavigateUrl="~/SamplePages/Listview"></asp:MenuItem>
+                            <asp:MenuItem Text="Repeater Reservations By Date" NavigateUrl="~/SamplePages/ReservationsByDate"></asp:MenuItem>
+                            <asp:MenuItem Text="Repeater Category MenuItems" NavigateUrl="~/SamplePages/CategoryMenuItems"></asp:MenuItem>
                         </asp:MenuItem>
+
+                         <asp:MenuItem Text="CRUD" Value="CRUD">
+                            <asp:MenuItem Text="ListView CRUD" NavigateUrl="~/CommandPages/SpecialEventsAdmin"></asp:MenuItem>
+                            <asp:MenuItem Text="Waiter 1517 CRUD" NavigateUrl="~/CommandPages/WaiterAdmin"></asp:MenuItem>
+                         </asp:MenuItem>
+                        
+
+                         <asp:MenuItem Text="Reports" Value="Reports">
+                            <asp:MenuItem Text="MenuCategory Items" NavigateUrl="~/Reports/MenuCategoryItemReport"></asp:MenuItem>
+                           <asp:MenuItem Text="Waiter Billing" NavigateUrl="~/Reports/WaiterBillingReport"></asp:MenuItem>
+                         </asp:MenuItem>
+                        <asp:MenuItem Text="Front Desk" Value="Front Desk">
+                            <asp:MenuItem Text="Front Desk" NavigateUrl="~/UXPages/FrontDesk.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Serving Table" NavigateUrl="~/UXPages/ServingTables.aspx"></asp:MenuItem>
+                        </asp:MenuItem>
+                         <asp:MenuItem Text="About Us" NavigateUrl="~/About.aspx"></asp:MenuItem>
+                         <asp:MenuItem Text="Contact Us" NavigateUrl="~/Contact.aspx"></asp:MenuItem>
                     </Items>
-                      
-                    </asp:Menu>
+                </asp:Menu>
 
                 </div>
             </div>

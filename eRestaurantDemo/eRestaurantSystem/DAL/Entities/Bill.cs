@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//#region Addtional Namespaces
 
+#region Additional Namespaces
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
-
-//#endregion
+#endregion
 
 namespace eRestaurantSystem.DAL.Entities
 {
@@ -16,16 +15,15 @@ namespace eRestaurantSystem.DAL.Entities
     {
         public int BillID { get; set; }
         public DateTime BillDate { get; set; }
-        public TimeSpan? OrderPlaced { get; set; }//DateTime?
-        public TimeSpan? OrderReady { get; set; }// new add 20151109
-        public TimeSpan? OrderServed { get; set; }//new add
-        public TimeSpan? OrderPaid { get; set; }//new add
+        public TimeSpan? OrderPlaced { get; set; }
+        public TimeSpan? OrderReady { get; set; }
+        public TimeSpan? OrderServed { get; set; }
+        public TimeSpan? OrderPaid { get; set; }
         public int NumberInParty { get; set; }
         public bool PaidStatus { get; set; }
         public int WaiterID { get; set; }
         public int? TableID { get; set; }
         public int? ReservationID { get; set; }
-        //public bool OrderReady { get; set; } is not in table anymore
         public string Comment { get; set; }
 
         // Navigation Properties
@@ -33,8 +31,9 @@ namespace eRestaurantSystem.DAL.Entities
         public virtual Waiter Waiter { get; set; }
         public virtual Table Table { get; set; }
         public virtual Reservation Reservation { get; set; }
+    
 
-        public Bill() // set default value
+        public Bill()
         {
             BillDate = DateTime.Now;
         }

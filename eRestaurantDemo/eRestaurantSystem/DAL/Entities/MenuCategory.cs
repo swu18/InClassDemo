@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//#region Addtional Namespaces
+#region Additional Namespaces
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
-//#endregion
+#endregion
 
 namespace eRestaurantSystem.DAL.Entities
 {

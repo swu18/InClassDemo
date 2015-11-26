@@ -9,7 +9,6 @@ namespace eRestaurantSystem.DAL.POCOs
     public class WaiterOnDuty
     {
         public int WaiterId { get; set; }
-        public string FullName { get;set;}
-
+        public string FullName { get; set; }
     }
 }

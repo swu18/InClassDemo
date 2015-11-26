@@ -6,7 +6,7 @@ using System.Web;
 /// <summary>
 /// Summary description for BusinessRuleException
 /// </summary>
-[Serializable] // indicate system this one will be out or input
+[Serializable]
 public class BusinessRuleException : Exception
 {
     public List<string> RuleDetails { get; set; }

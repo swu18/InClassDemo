@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eRestaurantSystem.DAL.POCOs
 {
-    public class CategoryMenuItems
+     public class CategoryMenuItems
     {
         public string CategoryDescription { get; set; }
         public string ItemDescription { get; set; }
