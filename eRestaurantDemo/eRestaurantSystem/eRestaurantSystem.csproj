@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\AdminController.cs" />
+    <Compile Include="BLL\Security\RoleManager.cs" />
     <Compile Include="BLL\Security\UserManager.cs" />
     <Compile Include="BusinessRuleException.cs" />
     <Compile Include="DAL\DTOs\MenuCategoryItems.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="DAL\Entities\MenuCategory.cs" />
     <Compile Include="DAL\Entities\Reservation.cs" />
     <Compile Include="DAL\Entities\Security\ApplicationUser.cs" />
+    <Compile Include="DAL\Entities\Security\SecurityRoles.cs" />
     <Compile Include="DAL\Entities\SpecialEvent.cs" />
     <Compile Include="DAL\Entities\Table.cs" />
     <Compile Include="DAL\Entities\Waiter.cs" />

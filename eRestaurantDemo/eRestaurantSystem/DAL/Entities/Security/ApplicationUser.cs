@@ -12,5 +12,9 @@ namespace eRestaurantSystem.DAL.Entities.Security
     //http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser// become to entity
     {
+        public int? WaiterID { get; set; }
+
+
+
     }
 }
