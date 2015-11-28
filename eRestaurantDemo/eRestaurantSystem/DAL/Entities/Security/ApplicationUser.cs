@@ -7,14 +7,9 @@ using System.Threading.Tasks;
 
 namespace eRestaurantSystem.DAL.Entities.Security
 {
-    // You can add User data for the user by adding more 
-    //properties to your User class, please visit 
-    //http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class ApplicationUser : IdentityUser// become to entity
+    // You can add User data for the user by adding more properties to your User class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    public class ApplicationUser : IdentityUser
     {
         public int? WaiterID { get; set; }
-
-
-
     }
 }

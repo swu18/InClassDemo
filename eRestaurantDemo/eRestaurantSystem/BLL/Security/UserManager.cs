@@ -11,13 +11,8 @@ using System.Threading.Tasks;
 
 namespace eRestaurantSystem.BLL.Security
 {
-    public class UserManager : UserManager<ApplicationUser> //Second BLL
+    public class UserManager : UserManager<ApplicationUser>
     {
-        public UserManager()
-            : base(new UserStore<ApplicationUser>(new ApplicationDbContext()))
-        {
-        }
-
         #region Constants
         private const string STR_DEFAULT_PASSWORD = "Pa$$word1";
         /// <summary>Requires FirstName and LastName</summary>
@@ -27,6 +22,10 @@ namespace eRestaurantSystem.BLL.Security
         private const string STR_WEBMASTER_USERNAME = "Webmaster";
         #endregion
 
+        public UserManager()
+            : base(new UserStore<ApplicationUser>(new ApplicationDbContext()))
+        {
+        }
         public void AddDefaultUsers()
         {
             using (var context = new eRestaurantContext())
@@ -63,11 +62,6 @@ namespace eRestaurantSystem.BLL.Security
                 }
             }
         }
-    
-    
-    
+
     }
-
-
-
 }

@@ -1,12 +1,16 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="DateTimeMocker.ascx.cs" Inherits="UserControls_DateTimeMocker" %>
-<div class="well">
+﻿<%@ Control Language="C#" AutoEventWireup="true" 
+    CodeFile="DateTimeMocker.ascx.cs" 
+    Inherits="UserControls_DateTimeMocker" %>
+
+ <div class="well">
         <div class="pull-right col-md-5">
             <h4>
                 <small>Last Billed Date/Time:</small>
                 <asp:Repeater ID="AdHocBillDateRepeater" runat="server" 
                     DataSourceID="AdHocBillDateDataSource" 
                     ItemType="System.DateTime">
-                    <itemtemplate><b class="label label-primary"><%# Item.ToShortDateString() %></b> &ndash; <b class="label label-info"><%# Item.ToShortTimeString() %></b></itemtemplate>
+                    <itemtemplate><b class="label label-primary"><%# Item.ToShortDateString() %></b> &ndash; 
+                        <b class="label label-info"><%# Item.ToShortTimeString() %></b></itemtemplate>
                 </asp:Repeater>
             </h4>
             <asp:ObjectDataSource runat="server" ID="AdHocBillDateDataSource"

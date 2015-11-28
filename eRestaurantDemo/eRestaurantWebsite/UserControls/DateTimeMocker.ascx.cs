@@ -4,52 +4,57 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 #region Additional Namespaces
 using eRestaurantSystem.BLL;
-using eRestaurantSystem.DAL.Entities;
-using eRestaurantSystem.DAL.DTOs;
-using eRestaurantSystem.DAL.POCOs;
 #endregion
+
 public partial class UserControls_DateTimeMocker : System.Web.UI.UserControl
 {
-    public DateTime MockerDate
+    //create properties that will allow external users
+    //of this control to have access to the data
+    //(date and time) on this control.
+     public DateTime MockDate
     {
-        get
+         get
         {
-            //create a datetime variable and assign it a default value
+            //setup a variable to hold the date
+             // this variable will be initialized to a default
             DateTime date = DateTime.MinValue;
 
-            //override the default with the contents of the textbox SearchDate
+             //possible override the default date with the
+             //contents of the web control SearchDate
             DateTime.TryParse(SearchDate.Text, out date);
 
-            //pass back a date either the default or the textbox
+             //return the date value
             return date;
         }
-        set
+         set
         {
             SearchDate.Text = value.ToString("yyyy-MM-dd");
         }
     }
 
-    public TimeSpan MockerTime
-    {
-        get
-        {
-            //create a time variable and assign it a default value
-            TimeSpan time = TimeSpan.MinValue;
+     public TimeSpan MockTime
+     {
+         get
+         {
+             //setup a variable to hold the time
+             // this variable will be initialized to a default
+             TimeSpan time = TimeSpan.MinValue;
 
-            //override the default with the contents of the textbox SearchTime
-            TimeSpan.TryParse(SearchTime.Text, out time);
+             //possible override the default time with the
+             //contents of the web control SearchTime
+             TimeSpan.TryParse(SearchTime.Text, out time);
 
-            //pass back a date either the default or the textbox
-            return time;
-        }
-        set
-        {
-            SearchTime.Text = DateTime.Today.Add(value).ToString("HH:mm:ss");
-        }
-    }
-
+             //return the time value
+             return time;
+         }
+         set
+         {
+             SearchTime.Text = DateTime.Today.Add(value).ToString("HH:mm:ss");
+         }
+     }
     protected void Page_Load(object sender, EventArgs e)
     {
 
